@@ -174,4 +174,7 @@ public class StudentEntity extends BaseEntity {
 
   @Column(nullable = true, name = "distance_from_school")
   private Long distanceFromSchool;
+
+  @Column(nullable = true, name = "metadata")
+  private Object metadata;
 }
