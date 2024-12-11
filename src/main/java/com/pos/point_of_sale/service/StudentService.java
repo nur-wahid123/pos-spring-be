@@ -360,6 +360,7 @@ public class StudentService {
                 if (createStudentDto.getDistanceFromSchool() != null) {
                     entity.setDistanceFromSchool(createStudentDto.getDistanceFromSchool());
                 }
+                entity.setMetadata(new Object());
                 entities.add(entity);
             }
             System.out.println("entities.size() = " + entities.size());
