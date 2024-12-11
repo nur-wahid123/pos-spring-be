@@ -6,7 +6,7 @@ import lombok.Data;
 public
 class Mother {
          private String name;
-         private Long yearOfBirth;
+         private Integer yearOfBirth;
          private String education;
          private String job;
          private String income;

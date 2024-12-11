@@ -17,9 +17,9 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "parents")
+@Table(name = "guardians")
 @EqualsAndHashCode(callSuper = true)
-public class ParentsEntity extends BaseEntity{
+public class GuardianEntity extends BaseEntity{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

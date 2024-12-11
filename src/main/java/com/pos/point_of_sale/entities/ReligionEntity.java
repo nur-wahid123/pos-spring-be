@@ -3,6 +3,7 @@ package com.pos.point_of_sale.entities;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +24,6 @@ public class ReligionEntity extends  BaseEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "religion")
+    @OneToMany(mappedBy = "religion", fetch = FetchType.LAZY)
     private List<StudentEntity> students;
 }

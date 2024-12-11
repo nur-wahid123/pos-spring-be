@@ -6,6 +6,8 @@ import com.pos.point_of_sale.enums.GenderEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-@Table(name = "student")
+@Table(name = "students")
 @EqualsAndHashCode(callSuper = true)
 public class StudentEntity extends BaseEntity {
 
@@ -33,6 +35,7 @@ public class StudentEntity extends BaseEntity {
   private String studentSchoolId;
 
   @Column(nullable = false)
+  // @Enumerated(EnumType.STRING)
   private GenderEnum gender;
 
   @Column(nullable = false, unique = true, name = "student_national_id")
@@ -78,6 +81,10 @@ public class StudentEntity extends BaseEntity {
   @JoinColumn(name = "transportation_id", nullable = true)
   private TransportationEntity transportation;
 
+  @ManyToOne(fetch=FetchType.LAZY)
+  @JoinColumn(name = "student_class_id", nullable = true)
+  private ClassEntity studentClass;
+
   @Column(nullable = true)
   private String telephone;
 
@@ -103,7 +110,7 @@ public class StudentEntity extends BaseEntity {
   private ParentsEntity mother;
 
   @ManyToOne(fetch=FetchType.LAZY)
-  private ParentsEntity guardian;
+  private GuardianEntity guardian;
 
   @Column(nullable = true, name = "national_test_number")
   private String nationalTestNumber;
@@ -157,7 +164,7 @@ public class StudentEntity extends BaseEntity {
   @Column(nullable = true)
   private String longitude;
 
-  @Column(nullable = true, name = "ily_card_id")
+  @Column(nullable = true, name = "family_card_id")
   private String familyCardId;
 
   @Column(nullable = true)
@@ -175,6 +182,6 @@ public class StudentEntity extends BaseEntity {
   @Column(nullable = true, name = "distance_from_school")
   private Long distanceFromSchool;
 
-  @Column(nullable = true, name = "metadata")
-  private Object metadata;
+  // @Column(nullable = true, name = "metadata")
+  // private Object metadata;
 }
