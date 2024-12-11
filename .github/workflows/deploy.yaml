@@ -43,10 +43,6 @@ jobs:
           chmod 600 /tmp/vm_key
 
           ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
-            podman pull docker.io/indrafajar/spring-index-be:latest
-            podman stop spring-index-be || true
-            podman rm spring-index-be || true
-            podman run -d --name spring-index-be --env-file ~/spring-index-be/.env --restart always --network pos-app --pod index-app -p 8080:8080 docker.io/indrafajar/spring-index-be:latest
-            podman image prune -f
+            sh deploy.sh
           EOF
 
