@@ -3,8 +3,7 @@ FROM docker.io/library/maven:3.9.9-eclipse-temurin-21 AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-COPY ~/spring-index-be/.env ./src
-
+COPY ../spring-index-be/.env ./src
 # Build the application
 RUN mvn clean package -DskipTests
 
