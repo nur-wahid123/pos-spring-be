@@ -6,7 +6,7 @@ on:
       - master  # Adjust this to your deployment branch
 
 jobs:
-  deploy:
+  build-docker-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,7 +44,11 @@ jobs:
       #       docker run -d --name spring-index-be --env-file ~/spring-index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/spring-index-be:latest
       #       docker image prune -f
       #     EOF
-
+  deploy-on-vm:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
       - name: Deploy to second VM
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
