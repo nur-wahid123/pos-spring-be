@@ -45,11 +45,11 @@ jobs:
           chmod 600 /tmp/vm_key
 
           ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
-            docker pull docker.io/indrafajar/spring-index-be:latest
-            docker stop spring-index-be || true
-            docker rm spring-index-be || true
-            docker run -d --name spring-index-be --restart always --network pos-app -p 3100:3000 docker.io/indrafajar/spring-index-be:latest
-            docker image prune -f
+            podman pull docker.io/indrafajar/spring-index-be:latest
+            podman stop spring-index-be || true
+            podman rm spring-index-be || true
+            podman run -d --name spring-index-be --restart always --network pos-app -p 3100:3000 docker.io/indrafajar/spring-index-be:latest
+            podman image prune -f
           EOF
   deploy-on-vm2:
     needs: build-and-upload-to-docker-hub
