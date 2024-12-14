@@ -28,8 +28,6 @@ jobs:
         with:
           push: true
           tags: indrafajar/spring-spring-index-be:latest
-        env:
-          DATABASE_ENV: ${{ secrets.ENV_FILE }}
   deploy-on-vm1:
     runs-on: ubuntu-latest
     needs: build-and-upload-to-docker-hub
@@ -48,7 +46,9 @@ jobs:
             podman pull docker.io/indrafajar/spring-index-be:latest
             podman stop spring-index-be || true
             podman rm spring-index-be || true
-            podman run -d --name spring-index-be --restart always --network pos-app -p 8080:8080 docker.io/indrafajar/spring-index-be:latest
+            podman create --name spring-index-be --restart always --network pos-app -p 8080:8080 docker.io/indrafajar/spring-index-be:latest
+            docker cp ~/spring-index-be/.env spring-index-be:/app/.env
+            docker start spring-index-be
             podman image prune -f
           EOF
   deploy-on-vm2:
@@ -60,7 +60,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY2 }}
           HOST: ${{ secrets.VM_HOST2 }}  # Update with your VM IP
-          USER: ${{ secrets.VM_USERNAME }}
+          USER: ${{ secrets.VM_USERNAME2 }}
         run: |
           echo "${SSH_PRIVATE_KEY}" > /tmp/vm_key
           chmod 600 /tmp/vm_key
@@ -69,7 +69,9 @@ jobs:
             docker pull indrafajar/spring-index-be:latest
             docker stop spring-index-be || true
             docker rm spring-index-be || true
-            docker run -d --name spring-index-be --env-file ~/spring-index-be/.env --restart unless-stopped --network pos-app -p 3100:3000 indrafajar/spring-index-be:latest
+            docker create --name spring-index-be --env-file ~/spring-index-be/.env --restart unless-stopped --network pos-app -p 8080:8080 indrafajar/spring-index-be:latest
+            docker cp ~/spring-index-be/.env spring-index-be:/app/.env
+            docker start spring-index-be
             docker image prune -f
           EOF
 
