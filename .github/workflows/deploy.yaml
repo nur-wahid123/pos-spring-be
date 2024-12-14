@@ -47,8 +47,8 @@ jobs:
             podman stop spring-index-be || true
             podman rm spring-index-be || true
             podman create --name spring-index-be --restart always --network pos-app -p 8080:8080 docker.io/indrafajar/spring-index-be:latest
-            docker cp ~/spring-index-be/.env spring-index-be:/app/.env
-            docker start spring-index-be
+            podman cp ~/spring-index-be/.env spring-index-be:/app/.env
+            podman start spring-index-be
             podman image prune -f
           EOF
   deploy-on-vm2:
