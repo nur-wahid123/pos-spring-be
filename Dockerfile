@@ -9,6 +9,5 @@ RUN mvn clean package -DskipTests
 FROM docker.io/library/openjdk:25-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
-COPY .env ./.env
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
