@@ -48,7 +48,7 @@ jobs:
             podman pull docker.io/indrafajar/spring-index-be:latest
             podman stop spring-index-be || true
             podman rm spring-index-be || true
-            podman run -d --name spring-index-be --restart always --network pos-app -p 3100:3000 docker.io/indrafajar/spring-index-be:latest
+            podman run -d --name spring-index-be --restart always --network pos-app -p 8080:8080 docker.io/indrafajar/spring-index-be:latest
             podman image prune -f
           EOF
   deploy-on-vm2:
@@ -58,7 +58,7 @@ jobs:
     
       - name: Deploy to second VM
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.VM_SSH_KEY2 }}
           HOST: ${{ secrets.VM_HOST2 }}  # Update with your VM IP
           USER: ${{ secrets.VM_USERNAME }}
         run: |
