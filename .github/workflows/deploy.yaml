@@ -62,10 +62,10 @@ jobs:
           HOST: ${{ secrets.VM_HOST2 }}  # Update with your VM IP
           USER: ${{ secrets.VM_USERNAME2 }}
         run: |
-          KEY_FILE=$(mktemp)
-          echo "${SSH_PRIVATE_KEY}" > $KEY_FILE
-          chmod 600 $KEY_FILE
-          ssh -o StrictHostKeyChecking=no -i $KEY_FILE $USER@$HOST << 'EOF'
+          echo "${SSH_PRIVATE_KEY}" > /tmp/vm_key
+          chmod 600 /tmp/vm_key
+
+          ssh -o StrictHostKeyChecking=no -i /tmp/vm_key $USER@$HOST << 'EOF'
             docker pull indrafajar/spring-index-be:latest
             docker stop spring-index-be || true
             docker rm spring-index-be || true
@@ -74,5 +74,4 @@ jobs:
             docker start spring-index-be
             docker image prune -f
           EOF
-          rm -f $KEY_FILE
 
